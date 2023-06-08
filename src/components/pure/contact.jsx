@@ -6,7 +6,6 @@ function ContactComponent ({ propContact, deleteContact }) {
   const [connected, SetConnected] = useState(propContact.connected)
 
   useEffect(() => {
-    console.log(`${propContact.name}: ${propContact.connected}`);
     propContact.connected = !propContact.connected
   }, [connected])
 
@@ -16,17 +15,14 @@ function ContactComponent ({ propContact, deleteContact }) {
       <li className='flex py-4 px-2  hover:bg-zinc-700 hover:rounded-lg group/li'>
         <picture className='h-10 w-10 rounded-xl overflow-hidden relative'>
           <img
-            className='object-cover w-full h-full'
+            className='object-cover w-full h-full select-none'
             src={propContact.img}
             alt='imagen del contacto'
           />
         </picture>
 
         <span
-          onClick={() => {
-            SetConnected(!connected)
-            console.log('click')
-          }}
+          onClick={() => SetConnected(!connected)}
           className='relative flex h-3 w-3 right-2 -top-1 cursor-pointer'
         >
           {connected ? (
@@ -49,11 +45,14 @@ function ContactComponent ({ propContact, deleteContact }) {
         </div>
 
         <div className='flex flex-1 justify-end pr-3 items-center invisible group-hover/li:visible'>
-          <span className='material-symbols-outlined p-1 text-zinc-500 hover:text-zinc-300 hover:cursor-pointer'>
+          <span className='material-symbols-outlined p-1 text-zinc-500 hover:text-zinc-300 hover:cursor-pointer select-none'>
             edit_square
           </span>
 
-          <span onClick={()=> deleteContact(propContact)} className='material-symbols-outlined opacity-50 text-red-300 mt-1 p-1 hover:opacity-90 hover:text-red-500 hover:cursor-pointer rounded-lg'>
+          <span
+            onClick={() => deleteContact(propContact)}
+            className='material-symbols-outlined opacity-50 text-red-300 mt-1 p-1 hover:opacity-90 hover:text-red-500 hover:cursor-pointer rounded-lg select-none'
+          >
             delete
           </span>
         </div>
