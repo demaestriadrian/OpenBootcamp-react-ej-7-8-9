@@ -1,8 +1,15 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import Contact from '../../models/contact.class'
 
-function ContactComponent ({ propContact }) {
+function ContactComponent ({ propContact, deleteContact }) {
+  const [connected, SetConnected] = useState(propContact.connected)
+
+  useEffect(() => {
+    console.log(`${propContact.name}: ${propContact.connected}`);
+    propContact.connected = !propContact.connected
+  }, [connected])
+
   return (
     <>
       {/* <hr className="bg-slate-200 w-1/2 self-center first:hidden" /> */}
@@ -14,12 +21,25 @@ function ContactComponent ({ propContact }) {
             alt='imagen del contacto'
           />
         </picture>
-        
-          <span className='relative flex h-3 w-3 right-2 -top-1 cursor-pointer'>
-            {propContact.connected ? (<span className='animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75'></span>) : ''}
-            <span className={`relative inline-flex rounded-full h-3 w-3 ${propContact.connected ? 'bg-green-500' : 'bg-red-600'}`} ></span>
-          </span>
-        
+
+        <span
+          onClick={() => {
+            SetConnected(!connected)
+            console.log('click')
+          }}
+          className='relative flex h-3 w-3 right-2 -top-1 cursor-pointer'
+        >
+          {connected ? (
+            <span className='animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75'></span>
+          ) : (
+            ''
+          )}
+          <span
+            className={`relative inline-flex rounded-full h-3 w-3 ${
+              connected ? 'bg-green-500' : 'bg-red-600'
+            }`}
+          ></span>
+        </span>
 
         <div className='ml-3 overflow-hidden'>
           <p className='text-sm font-medium text-zinc-50 capitalize'>
@@ -33,7 +53,7 @@ function ContactComponent ({ propContact }) {
             edit_square
           </span>
 
-          <span className='material-symbols-outlined opacity-50 text-red-300 mt-1 p-1 hover:opacity-90 hover:text-red-500 hover:cursor-pointer rounded-lg'>
+          <span onClick={()=> deleteContact(propContact)} className='material-symbols-outlined opacity-50 text-red-300 mt-1 p-1 hover:opacity-90 hover:text-red-500 hover:cursor-pointer rounded-lg'>
             delete
           </span>
         </div>
@@ -43,7 +63,8 @@ function ContactComponent ({ propContact }) {
 }
 
 ContactComponent.propTypes = {
-  propContact: PropTypes.instanceOf(Contact).isRequired
+  propContact: PropTypes.instanceOf(Contact).isRequired,
+  deleteContact: PropTypes.func
 }
 
 export default ContactComponent
