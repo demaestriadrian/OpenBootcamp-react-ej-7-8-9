@@ -3,7 +3,7 @@ import Contact from '../../models/contact.class'
 import dataContactArray from '../../data/contactList.data'
 import ContactComponent from '../pure/contact'
 
-function ContactList () {
+function ContactList() {
   const [contactList, setContacts] = useState(
     dataContactArray.map(data => new Contact(data))
   )
@@ -15,7 +15,7 @@ function ContactList () {
   // useEffect(()=>window.contactList = contactList,[contactList])
 
   return (
-    <div className='bg-zinc-800 rounded-lg w-[400px] p-3 mx-auto relative flex flex-col items-center'>
+    <div className='bg-zinc-800 rounded-lg w-[400px] max-h-full p-3 relative flex flex-col items-center'>
       <h1 className=' text-3xl text-center mb-10 select-none'> Contactos </h1>
       {contactList.length !== 0 ? (
         <>
@@ -23,7 +23,7 @@ function ContactList () {
             person_add
           </span>
 
-          <ul className='self-stretch'>
+          <ul className='self-stretch max-h-[80vh] overflow-y-auto'>
             {contactList.map(contact => (
               <ContactComponent
                 key={contact.id}
@@ -36,7 +36,7 @@ function ContactList () {
       ) : (
         <>
           <p className='text-center opacity-50'>Aún no hay contactos</p>
-          <div className='flex gap-2 mt-2 px-4 py-1 rounded-lg cursor-pointer opacity-80 hover:bg-zinc-700 hover:text-green-400 select-none'>
+          <div className='flex gap-2 mt-2 px-4 py-1 rounded-lg cursor-pointer opacity-80 text-green-400 hover:bg-green-900 hover:text-current select-none'>
             <span className='material-symbols-outlined'>person_add</span>
             <h2>Crear Contacto</h2>
           </div>

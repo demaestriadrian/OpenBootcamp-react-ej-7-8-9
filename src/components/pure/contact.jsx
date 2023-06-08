@@ -4,10 +4,19 @@ import Contact from '../../models/contact.class'
 
 function ContactComponent ({ propContact, deleteContact }) {
   const [connected, SetConnected] = useState(propContact.connected)
+  const [img, setImg] = useState(propContact.img)
 
   useEffect(() => {
+    
+    if(!propContact.img) { 
+      propContact.img = `https://ui-avatars.com/api/?name=${propContact.name}+${propContact.surname}`
+      setImg(propContact.img)
+    }
+    
     propContact.connected = !propContact.connected
   }, [connected])
+
+
 
   return (
     <>
@@ -16,7 +25,7 @@ function ContactComponent ({ propContact, deleteContact }) {
         <picture className='h-10 w-10 rounded-xl overflow-hidden relative'>
           <img
             className='object-cover w-full h-full select-none'
-            src={propContact.img}
+            src={img}
             alt='imagen del contacto'
           />
         </picture>
