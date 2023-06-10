@@ -14,10 +14,27 @@ function ContactList() {
     setContacts(contactList.filter(filterContact => filterContact !== contact))
   }
 
-  const cancelarFormulario = ()=>setShowForm(false)
-  const mostrarFormulario = ()=>setShowForm(true)
+  //Acciones de Edicion  ///////////////////////////////
 
-  // useEffect(()=>window.contactList = contactList,[contactList])
+  const [contactForm, setContactForm] = useState()
+
+  const mostrarFormulario = ()=>setShowForm(true)
+  const cancelarFormulario = ()=>{
+    setContactForm(undefined)
+    setShowForm(false)
+  }
+
+  const editContact = contact=>{
+    setContactForm(contact)
+    console.log(`contactForm desde editContact():`);
+    console.log(contactForm);
+    mostrarFormulario()
+  }
+
+  const aceptarFormulario = contact =>{
+    contactList.includes(contact) || contactList.unshift(contact)
+    cancelarFormulario()
+  }
 
   return (
     <>
@@ -35,6 +52,7 @@ function ContactList() {
                 key={contact.id}
                 propContact={contact}
                 deleteContact={deleteContact}
+                editContact={editContact}
               />
             ))}
           </ul>
@@ -49,7 +67,7 @@ function ContactList() {
         </>
       )}
     </div>
-    {showForm ? <FormModal cancelar={cancelarFormulario}/> : ""}
+    {showForm && <FormModal aceptarFormulario={aceptarFormulario} contact={contactForm} cancelar={cancelarFormulario}/>}
     </>
   )
 }

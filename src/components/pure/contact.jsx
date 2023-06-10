@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import Contact from '../../models/contact.class'
 
-function ContactComponent ({ propContact, deleteContact }) {
+function ContactComponent ({ propContact, deleteContact, editContact }) {
   const [connected, SetConnected] = useState(propContact.connected)
   const [img, setImg] = useState(propContact.img)
 
@@ -54,7 +54,10 @@ function ContactComponent ({ propContact, deleteContact }) {
         </div>
 
         <div className='flex flex-1 justify-end pr-3 items-center invisible group-hover/li:visible'>
-          <span className='material-symbols-outlined p-1 text-zinc-500 hover:text-zinc-300 hover:cursor-pointer select-none'>
+          <span 
+            onClick={() => editContact(propContact)}
+            className='material-symbols-outlined p-1 text-zinc-500 hover:text-zinc-300 hover:cursor-pointer select-none'
+          >
             edit_square
           </span>
 
@@ -72,7 +75,8 @@ function ContactComponent ({ propContact, deleteContact }) {
 
 ContactComponent.propTypes = {
   propContact: PropTypes.instanceOf(Contact).isRequired,
-  deleteContact: PropTypes.func
+  deleteContact: PropTypes.func,
+  editContact: PropTypes.func
 }
 
 export default ContactComponent

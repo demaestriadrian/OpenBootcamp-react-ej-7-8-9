@@ -1,9 +1,27 @@
-import React from 'react'
+import React, { useEffect, useRef } from 'react'
 import PropTypes from 'prop-types'
 import Contact from '../../models/contact.class'
 
-function FormModal ({aceptar,cancelar,contact = new Contact()}) {
+function FormModal ({aceptarFormulario,cancelar,contact = new Contact()}) {
 
+  const nameRef = useRef()
+  const surnameRef = useRef()
+  const emailRef = useRef()
+
+  useEffect(() => {
+    console.log(contact);
+    nameRef.current.value = contact.name
+    surnameRef.current.value = contact.surname
+    emailRef.current.value = contact.email
+  },[])
+
+  const aceptar = ()=>{
+      contact.name = nameRef.current.value
+      contact.surname = surnameRef.current.value
+      contact.email = emailRef.current.value
+      aceptarFormulario(contact)
+  }
+  
   return (
     <div
       className={`
@@ -22,16 +40,16 @@ function FormModal ({aceptar,cancelar,contact = new Contact()}) {
       >
       
       <label htmlFor="nombre">Nombre</label>
-      <input type="text" id='nombre' className='text-zinc-900' />
+      <input ref={nameRef} type="text" id='nombre' className='text-zinc-900' />
 
-      <label htmlFor="nombre">Apellido</label>
-      <input type="text" id='nombre' className='text-zinc-900' />
+      <label htmlFor="apellido">Apellido</label>
+      <input ref={surnameRef}  type="text" id='apellido' className='text-zinc-900' />
 
-      <label htmlFor="nombre">Correo Electronico</label>
-      <input type="text" id='nombre' className='text-zinc-900' />
+      <label htmlFor="email">Correo Electronico</label>
+      <input ref={emailRef}  type="text" id='email' className='text-zinc-900' />
 
       <div className='flex gap-2 mt-12 mr-4 mb-3 self-end'>
-      <button className='p-2 border rounded-lg'>Aceptar</button>
+      <button onClick={aceptar} className='p-2 border rounded-lg'>Aceptar</button>
       <button onClick={cancelar} className='p-2 border rounded-lg'>Cancelar</button>
       </div>
 
@@ -41,7 +59,7 @@ function FormModal ({aceptar,cancelar,contact = new Contact()}) {
 }
 
 FormModal.propTypes = {
-  aceptar: PropTypes.func,
+  aceptarFormulario: PropTypes.func,
   cancelar: PropTypes.func.isRequired,
   contact: PropTypes.instanceOf(Contact)
 }
