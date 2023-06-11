@@ -46,7 +46,7 @@ function ContactList() {
             person_add
           </span>
 
-          <ul className='self-stretch max-h-[80vh] overflow-y-auto'>
+          <ul className='self-stretch max-h-[75vh] overflow-y-auto'>
             {contactList.map(contact => (
               <ContactComponent
                 key={contact.id}

@@ -6,6 +6,21 @@
     font-variation-settings: 'FILL' 0, 'wght' 600, 'GRAD' 0, 'opsz' 48;
 }
 
+/* input{
+  @apply bg-inherit;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+  padding: 0 .5rem;
+} */
+
+/* label {
+  @apply text-lg;
+} */
+
+input:focus{
+  outline: none;
+}
+
+
 /* /////////////////////////////////////////////// */
 /* Scroll */
 

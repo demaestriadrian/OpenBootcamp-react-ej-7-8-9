@@ -9,7 +9,7 @@ function ContactComponent ({ propContact, deleteContact, editContact }) {
   useEffect(() => {
     
     if(!propContact.img) { 
-      propContact.img = `https://ui-avatars.com/api/?name=${propContact.name}+${propContact.surname}`
+      propContact.img = `https://ui-avatars.com/api/?name=${propContact.name.split(' ')[0]}+${propContact.surname.split(' ')[0]}`
       setImg(propContact.img)
     }
     

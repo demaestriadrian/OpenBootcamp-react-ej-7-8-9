@@ -15,12 +15,21 @@ function FormModal ({aceptarFormulario,cancelar,contact = new Contact()}) {
     emailRef.current.value = contact.email
   },[])
 
-  const aceptar = ()=>{
-      contact.name = nameRef.current.value
-      contact.surname = surnameRef.current.value
-      contact.email = emailRef.current.value
-      aceptarFormulario(contact)
+  const aceptar = e =>{
+    // e.preventDefault()
+    contact.name = nameRef.current.value
+    contact.surname = surnameRef.current.value
+    contact.email = emailRef.current.value
+    aceptarFormulario(contact)
   }
+
+  const handleFormKeys = e =>{
+    e.ctrlKey 
+      ? e.key === "Enter" && cancelar()
+      : e.key === 'Enter' && aceptar()
+    }
+  
+  
   
   return (
     <div
@@ -32,28 +41,34 @@ function FormModal ({aceptarFormulario,cancelar,contact = new Contact()}) {
       `}
       onClick={cancelar}
     >
-      <div onClick={e => e.stopPropagation()} className={`
+      <form onKeyDown={handleFormKeys} onSubmit={aceptar} onClick={e => e.stopPropagation()} className={`
         bg-zinc-800 rounded-lg
         w-[400px] max-h-full min-h-[200px]
-        p-3 relative drop-shadow-md
-        flex flex-col items-center`}
+        p-8 relative drop-shadow-md
+        flex flex-col gap-2`}
       >
-      
-      <label htmlFor="nombre">Nombre</label>
-      <input ref={nameRef} type="text" id='nombre' className='text-zinc-900' />
 
-      <label htmlFor="apellido">Apellido</label>
-      <input ref={surnameRef}  type="text" id='apellido' className='text-zinc-900' />
+        <div className='flex flex-col gap-2'>
+          <label htmlFor="nombre">Nombre</label>
+          <input ref={nameRef} tabIndex={1} autoFocus className='capitalize lg:w-[70%] bg-zinc-700 py-1 px-3 rounded-lg' type="text" id='nombre' />
+        </div>
+        <div className=' flex flex-col gap-2'>
+          <label htmlFor="apellido">Apellido</label>
+          <input ref={surnameRef} tabIndex={2} className='capitalize lg:w-[70%] bg-zinc-700 py-1 px-3 rounded-lg' type="text" id='apellido'/>
+        </div>
+        <div className='flex flex-col gap-2'>
+          <label htmlFor="email">Email</label>
+          <input ref={emailRef} tabIndex={3} className='lg:w-[70%] bg-zinc-700 py-1 px-3 rounded-lg' type="text" id='email'/>
+        </div>
 
-      <label htmlFor="email">Correo Electronico</label>
-      <input ref={emailRef}  type="text" id='email' className='text-zinc-900' />
+        {/* Botones //////////////////////////// */}
+        <div className='flex flex-row-reverse gap-2 mt-8 self-end'>
+        <button onClick={cancelar} tabIndex={5} className='p-2 border rounded-lg shadow-lg'>Cancelar</button>
+        <button tabIndex={4} className='p-2 border rounded-lg shadow-lg'>Aceptar</button>
+        
+        </div>
 
-      <div className='flex gap-2 mt-12 mr-4 mb-3 self-end'>
-      <button onClick={aceptar} className='p-2 border rounded-lg'>Aceptar</button>
-      <button onClick={cancelar} className='p-2 border rounded-lg'>Cancelar</button>
-      </div>
-
-      </div>
+      </form>
     </div>
   )
 }
