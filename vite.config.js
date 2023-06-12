@@ -7,4 +7,5 @@ export default defineConfig({
   server:{
     port: 5500,
   },
+  base: '/OpenBootcamp-react-ej-7-8-9/',
 })
